@@ -62,7 +62,7 @@ using namespace std;
 using namespace json11;
 
 static thread manager_thread;
-static bool manager_initialized = false;
+static a_bool_t manager_initialized = false;
 os_event_t *cef_started_event = nullptr;
 
 #if defined(_WIN32)
@@ -442,7 +442,7 @@ static void BrowserManagerThread(void)
 
 extern "C" EXPORT void obs_browser_initialize(void)
 {
-	if (!os_atomic_set_bool(&manager_initialized, true)) {
+	if (!std::atomic_exchange(&manager_initialized, true)) {
 #ifdef ENABLE_BROWSER_QT_LOOP
 		BrowserInit();
 #else
